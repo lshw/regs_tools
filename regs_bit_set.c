@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	uint32_t addr_base;
 	uint16_t addr_offset;
 	uint8_t dat;
-	if(argc!=4) {
+	if(argc!=3) {
 		printf("regs_bit_set 0x1fd011c0 0 \r\n");
 		return (-2);
 	}
