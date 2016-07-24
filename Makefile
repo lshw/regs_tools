@@ -1,4 +1,4 @@
-all: cbus_dump regs_write regs_read regs_bit_clr regs_bit_get regs_bit_set
+all: gpio_func cbus_dump regs_write regs_read regs_bit_clr regs_bit_get regs_bit_set
 clean:
 	rm  -rf bin
 
@@ -6,6 +6,10 @@ clean:
 cbus_dump: cbus_dump.c
 	mkdir -p bin
 	gcc -o bin/cbus_dump cbus_dump.c 
+
+gpio_func: gpio_func.c
+	mkdir -p bin
+	gcc -o bin/gpio_func gpio_func.c 
 
 regs_write: regs_write.c
 	mkdir -p bin
