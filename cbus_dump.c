@@ -26,10 +26,11 @@ int main()
 	unsigned long addr;  
 	unsigned char content;  
 	int i = 0,i1 = 0;
+printf("[gpio_number]:    0   8  16  24  32  40  48  56  64  72  80  88  96 104 112 120"); 
 	for(i1 = 0 ; i1 < 5 ; i1 ++) { //每个gpio5个功能的定义分别是bfd0110c0,bfd0110d0,bfd0110e0,bfd0110f0,bfd011200开始的16个字节，
-		printf("\nfun%d[bfd01%03x]:",i1 + 1,LS1X_CBUS_FIRST0 + i1 * 0x10);
+		printf("\nfun%d[1fd01%03x]:",i1 + 1,LS1X_CBUS_FIRST0 + i1 * 0x10);
 		for(i = 0 ; i < 0x10 ; i ++) {
-			printf(" %02x",map_base[LS1X_CBUS_FIRST0 + i1 * 0x10 + i]);
+			printf("  %02x",map_base[LS1X_CBUS_FIRST0 + i1 * 0x10 + i]);
 		}
 	}  
 	close(fd);  

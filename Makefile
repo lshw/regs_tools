@@ -1,7 +1,29 @@
-cbus_dump: cbus_dump.c
-	mkdir -p bin
-	gcc -o bin/cbus_dump cbus_dump.c 
+all: cbus_dump regs_write regs_read regs_bit_clr regs_bit_get regs_bit_set
 clean:
 	rm  -rf bin
 
-all: cbus_dump
+
+cbus_dump: cbus_dump.c
+	mkdir -p bin
+	gcc -o bin/cbus_dump cbus_dump.c 
+
+regs_write: regs_write.c
+	mkdir -p bin
+	gcc -o bin/regs_write regs_write.c 
+
+regs_read: regs_read.c
+	mkdir -p bin
+	gcc -o bin/regs_read regs_read.c 
+
+regs_bit_clr: regs_bit_clr.c
+	mkdir -p bin
+	gcc -o bin/regs_bit_clr regs_bit_clr.c 
+
+regs_bit_get: regs_bit_get.c
+	mkdir -p bin
+	gcc -o bin/regs_bit_get regs_bit_get.c 
+
+regs_bit_set: regs_bit_set.c
+	mkdir -p bin
+	gcc -o bin/regs_bit_set regs_bit_set.c 
+
