@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	uint32_t addr_base;
 	uint16_t addr_offset,addr;
 	uint8_t func,gpio,i,reg,bit;
-	if(argc!=4) {
+	if(argc!=3) {
 		printf("gpio_func 4 85 ;set gpio85 to function 4 \r\n");
 		return (-2);
 	}
