@@ -39,8 +39,8 @@ int main(int argc, char *argv[])
 	addr_offset=0x1c0;
 	func=atoi(argv[1]);
 	gpio=atoi(argv[2]);
-	reg=(uint8_t)gpio/32;
-        bit=gpio%32;
+	reg=(uint8_t)gpio/8;
+        bit=gpio%8;
 	if(func>5) {
 		printf("func <=5 \r\n");
 		return(-3);
@@ -62,8 +62,14 @@ int main(int argc, char *argv[])
 	}
 if(func>0) {
 for(i=1;i<func;i++) //disable 前面的func功能
-	map_base[addr_offset+i*0x10+reg] &= ~(1<<bit);
-map_base[addr_offset+func*0x10+reg] |= (1<<bit);
+	map_base[addr_offset+(i-1)*0x10+reg] &= ~(1<<bit);
+addr=addr_offset+(func-1)*0x10+reg;
+printf("[%08x]:%02x",addr_base+addr,map_base[addr]);
+map_base[addr] |= (1<<bit);
+map_base[addr]=map_base[addr]|0x20;
+printf("=>%02x,bit%d set,%02x",map_base[addr],bit,1<<bit);
+
+
 }else {
 for(i=1;i<6;i++) //disable 全部功能
 	map_base[addr_offset+i*0x10+reg] &= ~(1<<bit);
