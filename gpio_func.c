@@ -66,7 +66,6 @@ for(i=1;i<func;i++) //disable 前面的func功能
 addr=addr_offset+(func-1)*0x10+reg;
 printf("[%08x]:%02x",addr_base+addr,map_base[addr]);
 map_base[addr] |= (1<<bit);
-map_base[addr]=map_base[addr]|0x20;
 printf("=>%02x,bit%d set,%02x",map_base[addr],bit,1<<bit);
 
 
