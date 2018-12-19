@@ -1,12 +1,12 @@
-#include<stdio.h>  
-#include<stdlib.h>  
-#include<stdint.h>  
-#include<string.h>  
-#include<unistd.h>  
-#include<sys/mman.h>  
-#include<sys/types.h>  
-#include<sys/stat.h>  
-#include<fcntl.h>  
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdint.h>
+#include<string.h>
+#include<unistd.h>
+#include<sys/mman.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<fcntl.h>
 #include "ls1c_regs.h"
 
 
@@ -23,11 +23,11 @@ uint32_t hextol(char * str) {
 	return ret;
 }
 
-int main(int argc, char *argv[])  
-{  
-	uint32_t * map_base;  
-	FILE *f;  
-	int n, fd;  
+int main(int argc, char *argv[])
+{
+	uint32_t * map_base;
+	FILE *f;
+	int n, fd;
 	uint32_t addr_base;
 	uint16_t addr_offset;
 	uint8_t dat;
@@ -44,18 +44,18 @@ int main(int argc, char *argv[])
 		return(-3);
 	}
 
-	fd = open("/dev/mem", O_RDWR|O_SYNC);  
-	if (fd == -1)  {  
-		return (-1);  
-	}  
+	fd = open("/dev/mem", O_RDWR|O_SYNC);
+	if (fd == -1)  {
+		return (-1);
+	}
 	/* 把xxxxx000开始0x1000字节，映射到map_base */
-	map_base = mmap(NULL, 0x1000, PROT_READ|PROT_WRITE, MAP_SHARED, fd, addr_base);  
+	map_base = mmap(NULL, 0x1000, PROT_READ|PROT_WRITE, MAP_SHARED, fd, addr_base);
 
-	if (map_base == 0)  {  
-		printf("NULL pointer!\n");  
+	if (map_base == 0)  {
+		printf("NULL pointer!\n");
 	}
 	map_base[addr_offset/sizeof(uint32_t)]&=~(1 << dat);
-	close(fd);  
-	munmap(map_base, 0xff);  
+	close(fd);
+	munmap(map_base, 0xff);
 	return (dat);
-}  
+}
