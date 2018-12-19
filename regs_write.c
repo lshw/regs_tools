@@ -24,7 +24,7 @@ uint32_t hextol(char * str) {
 
 int main(int argc, char *argv[])  
 {  
-	unsigned char * map_base;  
+	uint32_t * map_base;  
 	FILE *f;  
 	int n, fd;  
 	uint32_t addr_base;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	}  
 
 
-	map_base[addr_offset]=dat;
+	map_base[addr_offset/sizeof(uint32_t)]|=(uint32_t)(dat<<(addr_offset%sizeof(uint32_t)*8));
 
 	close(fd);  
 	munmap(map_base, 0xff);  

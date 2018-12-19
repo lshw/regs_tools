@@ -24,12 +24,12 @@ uint32_t hextol(char * str) {
 
 int main(int argc, char *argv[])  
 {  
-	unsigned char * map_base;  
-	FILE *f;  
-	int n, fd;  
+	uint32_t * map_base;
+	FILE *f;
+	int n, fd;
 	uint32_t addr_base;
-	uint16_t addr_offset;
-	uint8_t dat;
+	uint32_t addr_offset;
+	uint32_t dat;
 	if(argc!=2) {
 		printf("regs_read 0x1fd011c0\r\n");
 		return (-2);
@@ -48,8 +48,10 @@ int main(int argc, char *argv[])
 	if (map_base == 0)  {  
 		printf("NULL pointer!\n");  
 	}  
-
-	printf("%02x",map_base[addr_offset]);
+	dat=map_base[addr_offset/4];
+	n=addr_offset%4;
+	dat=dat>>(n*8);
+	printf("%02x",(uint8_t)dat);
 
 	close(fd);  
 	munmap(map_base, 0xff);  

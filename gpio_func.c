@@ -9,23 +9,9 @@
 #include<fcntl.h>  
 #include "ls1c_regs.h"
 
-
-uint32_t hextol(char * str) {
-	uint8_t i=0,l;
-	uint32_t ret=0;
-	l=strlen(str);
-	for(i=0;i<l;i++) str[i]=str[i]|0x20; //'A-Z' to 'a-z'
-	for(i=2;i<l;i++){
-		ret=(ret<<4);
-		if(str[i]>'9') ret|=(str[i]-'a'+10);
-		else ret|=(str[i]&0xf);
-	}
-	return ret;
-}
-
 int main(int argc, char *argv[])  
 {  
-	unsigned char * map_base;  
+	uint32_t * map_base;  
 	FILE *f;  
 	int n, fd;  
 	uint32_t addr_base;
@@ -39,8 +25,8 @@ int main(int argc, char *argv[])
 	addr_offset=0x1c0;
 	func=atoi(argv[1]);
 	gpio=atoi(argv[2]);
-	reg=(uint8_t)gpio/8;
-        bit=gpio%8;
+	reg=(uint8_t)gpio/32;
+	bit=gpio%32;
 	if(func>5) {
 		printf("func <=5 \r\n");
 		return(-3);
@@ -60,20 +46,20 @@ int main(int argc, char *argv[])
 	if (map_base == 0)  {  
 		printf("NULL pointer!\n");  
 	}
-if(func>0) {
-for(i=1;i<func;i++) //disable 前面的func功能
-	map_base[addr_offset+(i-1)*0x10+reg] &= ~(1<<bit);
-addr=addr_offset+(func-1)*0x10+reg;
-printf("[%08x]:%02x",addr_base+addr,map_base[addr]);
-map_base[addr] |= (1<<bit);
-printf("=>%02x,bit%d set,%02x",map_base[addr],bit,1<<bit);
+	if(func>0) {
+		for(i=1;i<func;i++) //disable 前面的func功能
+			map_base[(addr_offset+(i-1)*0x10)/sizeof(uint32_t)+reg] &= ~(1<<bit);
+		addr=(addr_offset+(func-1)*0x10)/sizeof(uint32_t)+reg;
+		printf("[%08x]:%08x",addr_base+addr*sizeof(uint32_t),map_base[addr]);
+		map_base[addr] |= (1<<bit);
+		printf("=>%08x,bit%d set,%08x",map_base[addr],bit,1<<bit);
 
 
-}else {
-for(i=1;i<6;i++) //disable 全部功能
-	map_base[addr_offset+i*0x10+reg] &= ~(1<<bit);
+	}else {
+		for(i=1;i<6;i++) //disable 全部功能
+			map_base[(addr_offset+i*0x10)/sizeof(uint32_t)+reg] &= ~(1<<bit);
 
-}
+	}
 
 	close(fd);  
 	munmap(map_base, 0xff);  
