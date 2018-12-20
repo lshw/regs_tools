@@ -50,9 +50,12 @@ int main(int argc, char *argv[])
 	}
 	dat=map_base[addr_offset/4];
 	n=addr_offset%4;
-	dat=dat>>(n*8);
-	printf("%02x",(uint8_t)dat);
-
+	if(n==0) 
+		printf("%08x",dat);
+	else{
+		dat=dat>>(n*8);
+		printf("%02x",(uint8_t)dat);
+}
 	close(fd);
 	munmap(map_base, 0xff);
 	return (0);
