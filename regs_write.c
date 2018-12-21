@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 	uint32_t addr_base;
 	uint16_t addr_offset;
 	uint8_t dat;
+        uint32_t dat0;
 	if(argc!=3) {
 		printf("regs_write 0x1fd011c0 0x0\r\n");
 		return (-2);
@@ -50,8 +51,10 @@ int main(int argc, char *argv[])
 		printf("NULL pointer!\n");
 	}
 
-
-	map_base[addr_offset/sizeof(uint32_t)]|=(uint32_t)(dat<<(addr_offset%sizeof(uint32_t)*8));
+        n=addr_offset%4;
+        dat0=map_base[addr_offset/4];
+        dat0&=~(0xff<<(n*8));
+	map_base[addr_offset/4]=dat0|(uint32_t)(dat<<(n*8));
 
 	close(fd);
 	munmap(map_base, 0xff);

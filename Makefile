@@ -1,3 +1,4 @@
+CFLAGS = -static
 all: gpio_func cbus_dump regs_write regs_read regs_bit_clr regs_bit_get regs_bit_set
 clean:
 	rm  -rf bin
@@ -5,29 +6,29 @@ clean:
 
 cbus_dump: cbus_dump.c
 	mkdir -p bin
-	gcc  -static -o bin/cbus_dump cbus_dump.c 
+	gcc ${CFLAGS} -o bin/cbus_dump cbus_dump.c 
 
 gpio_func: gpio_func.c
 	mkdir -p bin
-	gcc -static -o bin/gpio_func gpio_func.c 
+	gcc ${CFLAGS} -o bin/gpio_func gpio_func.c 
 
 regs_write: regs_write.c
 	mkdir -p bin
-	gcc -static -o bin/regs_write regs_write.c 
+	gcc ${CFLAGS} -o bin/regs_write regs_write.c 
 
 regs_read: regs_read.c
 	mkdir -p bin
-	gcc -static -o bin/regs_read regs_read.c 
+	gcc ${CFLAGS} -o bin/regs_read regs_read.c 
 
 regs_bit_clr: regs_bit_clr.c
 	mkdir -p bin
-	gcc -static -o bin/regs_bit_clr regs_bit_clr.c 
+	gcc ${CFLAGS} -o bin/regs_bit_clr regs_bit_clr.c 
 
 regs_bit_get: regs_bit_get.c
 	mkdir -p bin
-	gcc -static -o bin/regs_bit_get regs_bit_get.c 
+	gcc ${CFLAGS} -o bin/regs_bit_get regs_bit_get.c 
 
 regs_bit_set: regs_bit_set.c
 	mkdir -p bin
-	gcc -static -o bin/regs_bit_set regs_bit_set.c 
+	gcc ${CFLAGS} -o bin/regs_bit_set regs_bit_set.c 
 
